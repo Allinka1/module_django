@@ -1,0 +1,21 @@
+<div class="col">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">{{ product }}</h5>
+      <p class="text-end">{{ product.price|floatformat:"2" }} UAH</p>
+      <p class="card-text">{{ product.description|truncatewords:"10" }}</p>
+      {% if product.quantity == 0 %}
+        <small class="text-muted">Not available</small>
+      {% endif %}
+    </div>
+    <div class="card-footer">
+      <small class="d-flex text-muted">{{ product }}</small>
+      <div class="text-end">
+        Quantity: <span class="badge  bg-secondary">{{ product.quantity }}</span>
+      </div>
+      <div class="d-flex">
+        <a href="{% url "product_details" pk=product.id %}" class="btn btn-outline-primary">View Details</a>
+      </div>
+    </div>
+  </div>
+</div>
