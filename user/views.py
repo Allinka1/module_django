@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
@@ -29,19 +30,19 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
 
-        return self.request.GET.get("next") or reverse_lazy("home")
+        return self.request.GET.get("next") or reverse_lazy("products_list")
 
 
-class UserLogoutView(View):
+class UserLogoutView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
 
         logout(self.request)
 
-        redirect_url = reverse_lazy("home")
+        redirect_url = reverse_lazy("products_list")
         return HttpResponseRedirect(redirect_url)
 
 
-class UserProfileView(TemplateView):
+class UserProfileView(LoginRequiredMixin, TemplateView):
 
     template_name = "user/profile.html"

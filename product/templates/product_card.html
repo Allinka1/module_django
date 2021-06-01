@@ -13,8 +13,10 @@
       <div class="text-end">
         Quantity: <span class="badge  bg-secondary">{{ product.quantity }}</span>
       </div>
-      <div class="d-flex">
+      <br>
+      <div class="d-flex justify-content-between">
         <a href="{% url "product_details" pk=product.id %}" class="btn btn-outline-primary">View Details</a>
+        <a href="{% url "order:create" %}" class="btn btn-outline-success">Buy</a>
       </div>
     </div>
   </div>

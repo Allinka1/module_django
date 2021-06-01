@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block doctitle %}Order | {{ block.super }}{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h5>Order Details</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Order status: {{ object.status }}
+    </div>
+    <div class="col">
+      Product: {{ object.product }}
+    </div>
+    <div class="col">
+      Quantity: {{ object.quantity }}
+    </div>
+  </div>
+{% endblock %}
