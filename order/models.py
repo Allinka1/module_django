@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse_lazy
 
 class Order(models.Model):
 
@@ -35,5 +35,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.product} ({self.quantity})"
+
+    def get_absolute_url(self):
+        return reverse_lazy("order:detail", kwargs={"pk": self.pk})
+
 
 

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from order.models import Order
+from django.contrib import messages
 
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -19,7 +20,6 @@ class OrderListView(LoginRequiredMixin, ListView):
 class OrderDetailView(LoginRequiredMixin, DetailView):
 
     model = Order
-    template_name = "order_detail.html"
 
     def get(self, *args, **kwargs):
         order = self.get_object()
@@ -37,4 +37,15 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.customer = self.request.user
+        total_price = form.instance.product.price * form.instance.quantity
+        user_wallet = form.instance.customer.userprofile.wallet
+        if total_price > user_wallet:
+            message_text = 'There is not enough funds in your wallet to pay for this purchase'
+            messages.add_message(self.request, messages.WARNING, message_text)
+            redirect_url = reverse_lazy("products_list")
+            return HttpResponseRedirect(redirect_url)
+        elif form.instance.quantity > form.instance.product.quantity:
+            messages.add_message(self.request, messages.WARNING, "Not enough products in stock")
+            redirect_url = reverse_lazy("products_list")
+            return HttpResponseRedirect(redirect_url)
         return super(OrderCreateView, self).form_valid(form)
