@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
     path('', include('product.urls')),
-    path("orders/", include("order.urls", namespace="order"))
+    path("orders/", include("order.urls", namespace="order")),
+    path("refunds/", include("refund.urls", namespace="refund")),
 ]

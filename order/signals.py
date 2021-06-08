@@ -3,7 +3,7 @@ from django.db.models.signals import pre_save
 from order.models import Order
 from product.models import Product
 from user.models import UserProfile
-import pdb
+
 
 @receiver(pre_save, sender=Order)
 def pre_order(sender, instance, *args, **kwargs):

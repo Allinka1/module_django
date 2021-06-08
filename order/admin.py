@@ -21,7 +21,6 @@ def get_order_identifier(order):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    """Order model admin implementation"""
 
     fields = ["status"]
 

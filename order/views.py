@@ -2,7 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from refund.forms import RefundCreateForm
 from order.models import Order
+from refund.models import Refund
 from django.contrib import messages
 
 
@@ -28,6 +30,12 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
             return HttpResponseRedirect(redirect_url)
 
         return super(OrderDetailView, self).get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        refund_form = RefundCreateForm()
+        context['refund_form'] = refund_form
+        return context
 
 
 class OrderCreateView(LoginRequiredMixin, CreateView):

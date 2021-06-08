@@ -6,6 +6,15 @@
       <h5>Order Details</h5>
     </div>
   </div>
+  {% for message in messages %}
+    <div class="row row-cols-1">
+     <div class="col">
+      <div class="alert alert-{{ message.tags }}">
+       {{ message }}
+      </div>
+     </div>
+    </div>
+  {% endfor %}
   <div class="row">
     <div class="col">
       Order status: {{ object.status }}
@@ -16,5 +25,11 @@
     <div class="col">
       Quantity: {{ object.quantity }}
     </div>
+    <form method="post" action="{% url "refund:create" %}" class="row">
+      {% csrf_token %}
+      {{ refund_form.as_p }}
+      <input type="hidden" name="order" value="{{ object.pk }}">
+      <p><input type="submit" class="btn btn-primary col-1" value="Refund"></p>
+    </form>
   </div>
 {% endblock %}
